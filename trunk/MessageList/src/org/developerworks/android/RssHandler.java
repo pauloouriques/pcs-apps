@@ -1,12 +1,16 @@
 package org.developerworks.android;
+import static org.developerworks.android.BaseFeedParser.DESCRIPTION;
+import static org.developerworks.android.BaseFeedParser.ITEM;
+import static org.developerworks.android.BaseFeedParser.LINK;
+import static org.developerworks.android.BaseFeedParser.PUB_DATE;
+import static org.developerworks.android.BaseFeedParser.TITLE;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
-
-import static org.developerworks.android.BaseFeedParser.*;
 
 public class RssHandler extends DefaultHandler{
 	private List<Message> messages;
