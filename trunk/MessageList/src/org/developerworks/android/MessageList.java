@@ -183,4 +183,8 @@ public class MessageList extends ListActivity {
 		return imgPath;
 	}
 	
+//	public List<Message> cleanList(List<Message> list){
+//		
+//	}
+	
 }
