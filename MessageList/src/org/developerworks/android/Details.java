@@ -6,12 +6,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
-import org.developerworks.android.utils.Item;
-
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -20,17 +15,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 
 public class Details extends Activity implements OnClickListener{
 	
 	private Bundle extras;
-	private Dialog alert;
 
 	@Override
     public void onCreate(Bundle savedInstanceState) {
