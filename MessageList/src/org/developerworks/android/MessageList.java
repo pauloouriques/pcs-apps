@@ -2,6 +2,7 @@ package org.developerworks.android;
 
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.developerworks.android.utils.Common;
@@ -11,6 +12,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -28,6 +30,7 @@ import android.widget.TextView;
 public class MessageList extends Activity {
 	
 	private List<Message> messages;
+	private HashMap<String, Bitmap> bitmaps = new HashMap<String, Bitmap>();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,10 +81,10 @@ public class MessageList extends Activity {
 	    	Log.i("AndroidNews", "Parser duration=" + duration);
 	    	String xml = writeXml();
 	    	Log.i("AndroidNews", xml);
-	    	List<String> titles = new ArrayList<String>(messages.size());
 	    	for (Message msg : messages){
-	    		if (msg.getTitle().length() < 200)
-	    			titles.add(msg.getTitle());
+	    		if (msg.getTitle().length() < 200 && !msg.getDescription().equals("http://globoesporte.globo.com")){
+	    			bitmaps.put(parseImg(msg.getDescription()), Common.getImageBitmap(parseImg(msg.getDescription())));
+	    		}
 	    	}
 	    	
     	} catch (Throwable t){
@@ -151,7 +154,7 @@ public class MessageList extends Activity {
 				
 				if(image != null) {
 					if (!parseImg(message.getDescription()).equals("http://globoesporte.globo.com")){
-						image.setImageBitmap(Common.getImageBitmap(parseImg(message.getDescription())));
+						image.setImageBitmap(bitmaps.get(parseImg(message.getDescription())));
 					}else{
 						image.setImageResource(R.drawable.no_image);
 					}
