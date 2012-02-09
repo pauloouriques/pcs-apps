@@ -15,6 +15,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
         android:src="@drawable/no_image" />
 
     <TextView
@@ -22,29 +24,34 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:textColor="#0099CC"
+        android:textSize="10dp"
         android:text="TextView" />
 
     <TextView
         android:id="@+id/detailsSubTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="10dp"
         android:text="TextView" />
 
     <Button
         android:id="@+id/detailsLink"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="30dp"
         android:layout_gravity="center"
-        android:background="@android:color/transparent"
         android:text="Ver post original"
+        android:background="#db2420"
         android:textColor="#fff" />
     
     <Button
         android:id="@+id/detailsShare"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="30dp"
         android:layout_gravity="center"
-        android:background="@android:color/transparent"
+        android:layout_marginTop="10dp"
+        android:background="#db2420"
         android:text="Compartilhar"
         android:textColor="#fff" />
     

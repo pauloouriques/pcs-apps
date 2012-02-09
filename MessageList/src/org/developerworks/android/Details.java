@@ -1,18 +1,11 @@
 package org.developerworks.android;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
+import org.developerworks.android.utils.Common;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -33,14 +26,17 @@ public class Details extends Activity implements OnClickListener{
         TextView title =  (TextView) findViewById(R.id.detailsTitle);
         title.setText(extras.getString("title"));
         TextView date =  (TextView) findViewById(R.id.detailsDate);
-        date .setText(extras.getString("date"));
+        date .setText(Common.parseDate(extras.getString("date")));
         TextView subtitle =  (TextView) findViewById(R.id.detailsSubTitle);
         subtitle.setText(extras.getString("subtitle"));
 		final Button link = (Button) findViewById(R.id.detailsLink);
 		link.setOnClickListener(this);
 		final ImageView image = (ImageView) findViewById(R.id.detailsImage);
 		if (!extras.getString("imgSrc").equals("http://globoesporte.globo.com")){
-			image.setImageBitmap(getImageBitmap(extras.getString("imgSrc")));
+			image.setImageBitmap(Common.getImageBitmap(extras.getString("imgSrc")));
+			System.out.println(image.getWidth()+ " "+ image.getHeight());
+		}else{
+			image.setImageResource(R.drawable.no_image);
 		}
 		
 		final Button share = (Button) findViewById(R.id.detailsShare);
@@ -63,20 +59,5 @@ public class Details extends Activity implements OnClickListener{
 		}
 	}
 	
-	public Bitmap getImageBitmap(String url) {
-        Bitmap bm = null; 
-        try { 
-            URL aURL = new URL(url); 
-            URLConnection conn = aURL.openConnection(); 
-            conn.connect(); 
-            InputStream is = conn.getInputStream(); 
-            BufferedInputStream bis = new BufferedInputStream(is); 
-            bm = BitmapFactory.decodeStream(bis); 
-            bis.close(); 
-            is.close(); 
-       } catch (IOException e) { 
-           Log.e("ERRO AQUI", "Error getting bitmap", e); 
-       } 
-       return bm; 
-    }
+
 }

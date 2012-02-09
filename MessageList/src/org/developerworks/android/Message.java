@@ -3,13 +3,11 @@ package org.developerworks.android;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
+
+import org.developerworks.android.utils.Common;
 
 public class Message implements Comparable<Message>{
-	static SimpleDateFormat FORMATTER = 
-		new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.US);
 	private String title;
 	private URL link;
 	private String description;
@@ -44,7 +42,7 @@ public class Message implements Comparable<Message>{
 	}
 
 	public String getDate() {
-		return FORMATTER.format(this.date);
+		return Common.FORMATTER.format(this.date);
 	}
 
 	public void setDate(String date) {
@@ -53,7 +51,7 @@ public class Message implements Comparable<Message>{
 			date += "0";
 		}
 		try {
-			this.date = FORMATTER.parse(date.trim());
+			this.date = Common.FORMATTER.parse(date.trim());
 		} catch (ParseException e) {
 			throw new RuntimeException(e);
 		}
