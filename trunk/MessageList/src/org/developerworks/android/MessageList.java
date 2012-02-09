@@ -7,7 +7,7 @@ import java.util.List;
 import org.developerworks.android.utils.Common;
 import org.xmlpull.v1.XmlSerializer;
 
-import android.app.ListActivity;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -16,24 +16,26 @@ import android.os.Handler;
 import android.util.Log;
 import android.util.Xml;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class MessageList extends ListActivity {
+public class MessageList extends Activity {
 	
 	private List<Message> messages;
-	
     @Override
-    public void onCreate(Bundle icicle) {
-        super.onCreate(icicle);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-        final ProgressDialog dialog = ProgressDialog.show(this, "", "Carregando feeds. Aguarde...", true);
+        final ListView lv = (ListView) findViewById(R.id.mainList);
+        
+        final ProgressDialog dialog = ProgressDialog.show(this, "", "Carregando feeds...", true);
 		final Handler handler = new Handler() {
 			public void handleMessage(android.os.Message msg) {
 				dialog.dismiss();
@@ -45,37 +47,26 @@ public class MessageList extends ListActivity {
 				runOnUiThread(new Runnable() {
 		            public void run() {
 		            	messages.remove(0);
-		    	    	MessageItemAdapter adapter = new MessageItemAdapter(getApplicationContext(), R.layout.listitem, parseList(messages));
-		    	    	setListAdapter(adapter);
-		           }
+		            	lv.setAdapter(new MessageItemAdapter(MessageList.this, R.layout.listitem, parseList(messages)));
+		            	lv.setOnItemClickListener(new OnItemClickListener() {
+		                    public void onItemClick(AdapterView<?> arg0, View view, int position, long arg3) {
+		                    	Intent intent = new Intent(MessageList.this, Details.class);
+		                		intent.putExtra("link", messages.get(position).getLink().toExternalForm());
+		                		intent.putExtra("title", messages.get(position).getTitle());
+		                		intent.putExtra("date", messages.get(position).getDate().toString());
+		                		intent.putExtra("imgSrc", parseImg(messages.get(position).getDescription()));
+		                		intent.putExtra("subtitle", parseSubtitle(messages.get(position).getDescription()));
+		                    	startActivity(intent);
+		                    }
+
+		                });
+		            }
 		        });
 		        handler.sendEmptyMessage(0);
 	        }
 	    };
 		checkUpdate.start();
     }
-    
-	@Override
-	public boolean onMenuItemSelected(int featureId, MenuItem item) {
-		super.onMenuItemSelected(featureId, item);
-		ArrayAdapter<Message> adapter = new MessageItemAdapter(getApplicationContext(), R.layout.listitem, this.messages);
-		if (adapter.getCount() > 0){
-			adapter.clear();
-		}
-		return true;
-	}
-
-	@Override
-	protected void onListItemClick(ListView l, View v, int position, long id) {
-		super.onListItemClick(l, v, position, id);
-		Intent intent = new Intent(this, Details.class);
-		intent.putExtra("link", messages.get(position).getLink().toExternalForm());
-		intent.putExtra("title", messages.get(position).getTitle());
-		intent.putExtra("date", messages.get(position).getDate().toString());
-		intent.putExtra("imgSrc", parseImg(messages.get(position).getDescription()));
-		intent.putExtra("subtitle", parseSubtitle(messages.get(position).getDescription()));
-    	startActivity(intent);
-	}
 
 	private void loadFeed(){
     	try{
