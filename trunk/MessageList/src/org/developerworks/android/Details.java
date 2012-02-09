@@ -64,7 +64,10 @@ public class Details extends Activity implements OnClickListener{
 			this.startActivity(viewMessage);
 			break;
 		case R.id.detailsShare:
-			createDialog();
+			Intent intent = new Intent(Intent.ACTION_SEND);
+			intent.setType("text/plain");
+			intent.putExtra(Intent.EXTRA_TEXT, extras.getString("link"));
+			startActivity(Intent.createChooser(intent, "Compartilhar via:"));
 			break;	
 		}
 	}
@@ -85,55 +88,4 @@ public class Details extends Activity implements OnClickListener{
        } 
        return bm; 
     }
-	
-	private void createDialog(){
-		final Item[] items = {
-			    new Item("Facebook", R.drawable.facebook),
-			    new Item("Twitter", R.drawable.twitter),
-			    new Item("Email", R.drawable.email),
-			};
-		
-		ListAdapter adapter = new ArrayAdapter<Item>(
-			this, android.R.layout.select_dialog_item,
-		    android.R.id.text1, items){
-	        public View getView(int position, View convertView, ViewGroup parent) {
-	            View v = super.getView(position, convertView, parent);
-	            TextView tv = (TextView)v.findViewById(android.R.id.text1);
-	            tv.setCompoundDrawablesWithIntrinsicBounds(items[position].icon, 0, 0, 0);
-	            int dp5 = (int) (5 * getResources().getDisplayMetrics().density + 0.5f);
-	            tv.setCompoundDrawablePadding(dp5);
-	            return v;
-	        }
-		};
-			
-    	AlertDialog.Builder builder = new AlertDialog.Builder(Details.this);
-    	builder.setTitle("Compartilhar via:");
-    	builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
-            
-
-			public void onClick(DialogInterface dialog, int item) {
-            	
-            	if (items[item].toString().equals("Visite a p�gina do im�vel")){
-            		String url = "http://www.tecnisa.com.br/";
-            		Intent intent = new Intent(Intent.ACTION_VIEW);  
-            		intent.setData(Uri.parse(url));  
-            		startActivity(intent);
-            	}
-            	else if (items[item].toString().equals("Twitter")){
-            		alert.dismiss();
-            	}
-            	else if (items[item].toString().equals("Facebook")){
-            		alert.dismiss();
-            	}
-            }
-    	});
-    	builder.setNeutralButton("Cancelar", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface arg0, int arg1) {}
-        });
-    	
-    	alert = builder.create();
-    	alert.show();
-	}
-	
-	
 }
