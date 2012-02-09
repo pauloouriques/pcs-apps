@@ -1,22 +1,18 @@
 package org.developerworks.android;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.StringWriter;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.developerworks.android.utils.Common;
 import org.xmlpull.v1.XmlSerializer;
 
 import android.app.ListActivity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.util.Xml;
 import android.view.LayoutInflater;
@@ -36,7 +32,27 @@ public class MessageList extends ListActivity {
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.main);
-        loadFeed();
+        
+        final ProgressDialog dialog = ProgressDialog.show(this, "", "Carregando feeds. Aguarde...", true);
+		final Handler handler = new Handler() {
+			public void handleMessage(android.os.Message msg) {
+				dialog.dismiss();
+			}
+		};
+		Thread checkUpdate = new Thread() {  
+			public void run() {
+				loadFeed();
+				runOnUiThread(new Runnable() {
+		            public void run() {
+		            	messages.remove(0);
+		    	    	MessageItemAdapter adapter = new MessageItemAdapter(getApplicationContext(), R.layout.listitem, parseList(messages));
+		    	    	setListAdapter(adapter);
+		           }
+		        });
+		        handler.sendEmptyMessage(0);
+	        }
+	    };
+		checkUpdate.start();
     }
     
 	@Override
@@ -46,7 +62,6 @@ public class MessageList extends ListActivity {
 		if (adapter.getCount() > 0){
 			adapter.clear();
 		}
-		this.loadFeed();
 		return true;
 	}
 
@@ -77,9 +92,7 @@ public class MessageList extends ListActivity {
 	    		if (msg.getTitle().length() < 200)
 	    			titles.add(msg.getTitle());
 	    	}
-	    	this.messages.remove(0);
-	    	MessageItemAdapter adapter = new MessageItemAdapter(getApplicationContext(), R.layout.listitem, this.messages);
-	    	this.setListAdapter(adapter);
+	    	
     	} catch (Throwable t){
     		Log.e("AndroidNews",t.getMessage(),t);
     	}
@@ -142,35 +155,20 @@ public class MessageList extends ListActivity {
 				}
 
 				if(date != null) {
-					date.setText(message.getDate());
+					date.setText(Common.parseDate(message.getDate()));
 				}
 				
 				if(image != null) {
 					if (!parseImg(message.getDescription()).equals("http://globoesporte.globo.com")){
-						image.setImageBitmap(getImageBitmap(parseImg(message.getDescription())));
+						image.setImageBitmap(Common.getImageBitmap(parseImg(message.getDescription())));
+					}else{
+						image.setImageResource(R.drawable.no_image);
 					}
 				}
 			}
 			return v;
 		}
 	}
-	
-	Bitmap getImageBitmap(String url) {
-        Bitmap bm = null; 
-        try { 
-            URL aURL = new URL(url); 
-            URLConnection conn = aURL.openConnection(); 
-            conn.connect(); 
-            InputStream is = conn.getInputStream(); 
-            BufferedInputStream bis = new BufferedInputStream(is); 
-            bm = BitmapFactory.decodeStream(bis); 
-            bis.close(); 
-            is.close(); 
-       } catch (IOException e) { 
-           Log.e("ERRO AQUI", "Error getting bitmap", e); 
-       } 
-       return bm; 
-    } 
 	
 	public String parseImg(String description){
 		String aux = description.substring(description.indexOf("src='") + 5);
@@ -183,8 +181,12 @@ public class MessageList extends ListActivity {
 		return imgPath;
 	}
 	
-//	public List<Message> cleanList(List<Message> list){
-//		
-//	}
+	public List<Message> parseList(List<Message> list){
+		List<Message> aux = new ArrayList<Message>();
+		for (int i = 0; i < 20; i++) {
+			aux.add(list.get(i));
+		}
+		return aux;
+	}
 	
 }
