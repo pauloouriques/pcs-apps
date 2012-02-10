@@ -81,9 +81,13 @@ public class MessageList extends Activity {
 	    	Log.i("AndroidNews", "Parser duration=" + duration);
 	    	String xml = writeXml();
 	    	Log.i("AndroidNews", xml);
+	    	int count = 0;
 	    	for (Message msg : messages){
 	    		if (msg.getTitle().length() < 200 && !msg.getDescription().equals("http://globoesporte.globo.com")){
 	    			bitmaps.put(parseImg(msg.getDescription()), Common.getImageBitmap(parseImg(msg.getDescription())));
+	    			if (count > 20)
+						break;
+	    			count ++;
 	    		}
 	    	}
 	    	
