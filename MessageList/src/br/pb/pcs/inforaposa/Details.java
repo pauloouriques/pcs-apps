@@ -1,7 +1,5 @@
 package br.pb.pcs.inforaposa;
 
-import org.developerworks.android.R;
-
 import br.pb.pcs.inforaposa.utils.Common;
 
 import android.app.Activity;
