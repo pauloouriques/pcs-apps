@@ -17,7 +17,7 @@
         <activity 
             android:label="@string/app_name" 
             android:theme="@style/mystyle"
-            android:name=".Details"  
+            android:name="br.pb.pcs.inforaposa.Details"  
             android:screenOrientation="portrait">
         </activity>
             
