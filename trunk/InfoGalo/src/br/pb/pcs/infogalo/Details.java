@@ -1,6 +1,8 @@
-package org.developerworks.android;
+package br.pb.pcs.infogalo;
 
-import org.developerworks.android.utils.Common;
+import org.developerworks.android.R;
+
+import br.pb.pcs.infogalo.utils.Common;
 
 import android.app.Activity;
 import android.content.Intent;
