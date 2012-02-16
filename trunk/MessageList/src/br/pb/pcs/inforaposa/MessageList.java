@@ -1,6 +1,7 @@
 package br.pb.pcs.inforaposa;
 
 import java.io.StringWriter;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +19,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.util.Xml;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +29,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MessageList extends Activity {
 	
@@ -47,32 +50,47 @@ public class MessageList extends Activity {
 		};
 		Thread checkUpdate = new Thread() {  
 			public void run() {
+				try{
 				loadFeed();
 				runOnUiThread(new Runnable() {
 		            public void run() {
-		            	messages.remove(0);
-		            	lv.setAdapter(new MessageItemAdapter(MessageList.this, R.layout.listitem, parseList(messages)));
-		            	lv.setOnItemClickListener(new OnItemClickListener() {
-		                    public void onItemClick(AdapterView<?> arg0, View view, int position, long arg3) {
-		                    	Intent intent = new Intent(MessageList.this, Details.class);
-		                		intent.putExtra("link", messages.get(position).getLink().toExternalForm());
-		                		intent.putExtra("title", messages.get(position).getTitle());
-		                		intent.putExtra("date", messages.get(position).getDate().toString());
-		                		intent.putExtra("imgSrc", parseImg(messages.get(position).getDescription()));
-		                		intent.putExtra("subtitle", parseSubtitle(messages.get(position).getDescription()));
-		                    	startActivity(intent);
-		                    }
-
-		                });
+		            	if (messages == null){
+		            		Toast msg = Toast.makeText(MessageList.this, "Verifique sua conexão com a Internet.", Toast.LENGTH_LONG);
+							msg.setGravity(Gravity.CENTER, msg.getXOffset() / 2, msg.getYOffset() / 2);
+							msg.show();
+							MessageList.this.finish();
+		            	}
+		            	else{         	
+		            		messages.remove(0);
+			            	lv.setAdapter(new MessageItemAdapter(MessageList.this, R.layout.listitem, parseList(messages)));
+			            	lv.setOnItemClickListener(new OnItemClickListener() {
+			                    public void onItemClick(AdapterView<?> arg0, View view, int position, long arg3) {
+			                    	Intent intent = new Intent(MessageList.this, Details.class);
+			                		intent.putExtra("link", messages.get(position).getLink().toExternalForm());
+			                		intent.putExtra("title", messages.get(position).getTitle());
+			                		intent.putExtra("date", messages.get(position).getDate().toString());
+			                		intent.putExtra("imgSrc", parseImg(messages.get(position).getDescription()));
+			                		intent.putExtra("subtitle", parseSubtitle(messages.get(position).getDescription()));
+			                    	startActivity(intent);
+			                    }
+	
+			                });
+		            	}
 		            }
 		        });
 		        handler.sendEmptyMessage(0);
+				} catch (NullPointerException m){
+		    		Log.e("AndroidNews",m.getMessage(),m);	
+		    	} catch (Throwable t){
+		    		Log.e("AndroidNews",t.getMessage(),t);
+		    	}
+
 	        }
 	    };
 		checkUpdate.start();
     }
 
-	private void loadFeed(){
+	private void loadFeed() throws UnknownHostException{
     	try{
     		Log.i("AndroidNews", "ParserType: SAX");
 	    	FeedParser parser = FeedParserFactory.getParser();
@@ -91,8 +109,7 @@ public class MessageList extends Activity {
 	    			count ++;
 	    		}
 	    	}
-	    	
-    	} catch (Throwable t){
+    	}catch (Throwable t){
     		Log.e("AndroidNews",t.getMessage(),t);
     	}
     }
