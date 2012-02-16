@@ -1,4 +1,4 @@
-package org.developerworks.android;
+package br.pb.pcs.infogalo;
 import java.util.List;
 
 public interface FeedParser {

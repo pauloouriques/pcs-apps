@@ -1,11 +1,11 @@
-package org.developerworks.android;
+package br.pb.pcs.infogalo;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.ParseException;
 import java.util.Date;
 
-import org.developerworks.android.utils.Common;
+import br.pb.pcs.infogalo.utils.Common;
 
 public class Message implements Comparable<Message>{
 	private String title;

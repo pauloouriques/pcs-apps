@@ -1,4 +1,4 @@
-package org.developerworks.android.utils;
+package br.pb.pcs.infogalo.utils;
 
 public class Item{
 	

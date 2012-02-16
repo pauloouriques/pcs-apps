@@ -1,4 +1,4 @@
-package org.developerworks.android.utils;
+package br.pb.pcs.infogalo.utils;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;

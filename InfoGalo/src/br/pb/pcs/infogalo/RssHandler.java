@@ -1,9 +1,9 @@
-package org.developerworks.android;
-import static org.developerworks.android.BaseFeedParser.DESCRIPTION;
-import static org.developerworks.android.BaseFeedParser.ITEM;
-import static org.developerworks.android.BaseFeedParser.LINK;
-import static org.developerworks.android.BaseFeedParser.PUB_DATE;
-import static org.developerworks.android.BaseFeedParser.TITLE;
+package br.pb.pcs.infogalo;
+import static br.pb.pcs.infogalo.BaseFeedParser.DESCRIPTION;
+import static br.pb.pcs.infogalo.BaseFeedParser.ITEM;
+import static br.pb.pcs.infogalo.BaseFeedParser.LINK;
+import static br.pb.pcs.infogalo.BaseFeedParser.PUB_DATE;
+import static br.pb.pcs.infogalo.BaseFeedParser.TITLE;
 
 import java.util.ArrayList;
 import java.util.List;

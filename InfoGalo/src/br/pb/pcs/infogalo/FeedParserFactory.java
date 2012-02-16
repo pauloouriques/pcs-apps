@@ -1,4 +1,4 @@
-package org.developerworks.android;
+package br.pb.pcs.infogalo;
 public abstract class FeedParserFactory {
 	static String feedUrl = "http://globoesporte.globo.com/dynamo/semantica/editorias/plantao/futebol/times/treze/feed.rss";
 	
