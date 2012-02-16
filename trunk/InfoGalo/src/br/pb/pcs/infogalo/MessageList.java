@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.developerworks.android.R;
 import org.xmlpull.v1.XmlSerializer;
 
 import br.pb.pcs.infogalo.utils.Common;
