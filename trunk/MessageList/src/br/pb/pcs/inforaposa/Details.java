@@ -1,7 +1,5 @@
 package br.pb.pcs.inforaposa;
 
-import br.pb.pcs.inforaposa.utils.Common;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -11,6 +9,10 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import br.pb.pcs.inforaposa.utils.Common;
+
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
 
 public class Details extends Activity implements OnClickListener{
 	
@@ -41,6 +43,10 @@ public class Details extends Activity implements OnClickListener{
 		
 		final Button share = (Button) findViewById(R.id.detailsShare);
 		share.setOnClickListener(this);
+		
+		AdView adView = (AdView)this.findViewById(R.id.adView);
+	    adView.loadAd(new AdRequest());
+		
     }
 	
 	public void onClick(View v) {
