@@ -1,58 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
-	android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/detailsTitle"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
-
-    <ImageView
-        android:id="@+id/detailsImage"
+    <LinearLayout
+        android:id="@+id/linearLayout1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/no_image" />
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/detailsDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textColor="#0099CC"
-        android:textSize="10dp"
-        android:text="TextView" />
+        <TextView
+            android:id="@+id/detailsTitle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/detailsSubTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="10dp"
-        android:text="TextView" />
+        <ImageView
+            android:id="@+id/detailsImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/no_image" />
 
-    <Button
-        android:id="@+id/detailsLink"
-        android:layout_width="200dp"
-        android:layout_height="30dp"
-        android:layout_gravity="center"
-        android:text="Ver post original"
-        android:background="#db2420"
-        android:textColor="#fff" />
-    
-    <Button
-        android:id="@+id/detailsShare"
-        android:layout_width="200dp"
-        android:layout_height="30dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:background="#db2420"
-        android:text="Compartilhar"
-        android:textColor="#fff" />
-    
+        <TextView
+            android:id="@+id/detailsDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="TextView"
+            android:textColor="#0099CC"
+            android:textSize="10dp" />
+
+        <TextView
+            android:id="@+id/detailsSubTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"
+            android:text="TextView" />
+
+        <Button
+            android:id="@+id/detailsLink"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="#db2420"
+            android:text="Ver post original"
+            android:textColor="#fff" />
+
+        <Button
+            android:id="@+id/detailsShare"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:background="#db2420"
+            android:text="Compartilhar"
+            android:textColor="#fff" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" >
+
+            <com.google.ads.AdView
+                android:id="@+id/adView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                ads:adSize="BANNER"
+                ads:adUnitId="a14f4c188978816"
+                ads:loadAdOnCreate="true"
+                ads:testDevices="I55004c0e152c" />
+        </LinearLayout>
+    </LinearLayout>
+
 </LinearLayout>
