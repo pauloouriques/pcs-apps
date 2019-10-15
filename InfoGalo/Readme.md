@@ -1,0 +1,1 @@
+Info Galo is an app to share info about the Treze FC.
